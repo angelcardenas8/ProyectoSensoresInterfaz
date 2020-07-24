@@ -53,6 +53,8 @@ public class Home extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -292,6 +294,12 @@ public class Home extends javax.swing.JFrame {
 
         bg.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 450));
 
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/infinity_3.gif"))); // NOI18N
+        bg.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 630, 200));
+
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/infinity_3.gif"))); // NOI18N
+        bg.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 630, 200));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -401,6 +409,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

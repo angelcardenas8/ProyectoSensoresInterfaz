@@ -1,3 +1,10 @@
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +22,19 @@ public class nivelesagua extends javax.swing.JFrame {
      */
     public nivelesagua() {
         initComponents();
+         DefaultCategoryDataset oDataSet = new DefaultCategoryDataset();
+        oDataSet.addValue(30, "Tinaco Baño arriba", "");
+        oDataSet.addValue(88, "Sisterna del patio", "");
+
+        
+        //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+        JFreeChart oChart = ChartFactory.createBarChart3D("Almacenaje de agua", "Tipo de contenedor", "Nivel de agua", oDataSet, PlotOrientation.VERTICAL, true, true, true);
+
+        //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+        ChartPanel cPanel = new ChartPanel(oChart);
+        aguapanel.setLayout(new java.awt.BorderLayout());
+        aguapanel.add(cPanel);
+
     }
 
     /**
@@ -40,14 +60,7 @@ public class nivelesagua extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        aguapanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,59 +221,18 @@ public class nivelesagua extends javax.swing.JFrame {
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
-        jLabel10.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel10.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel10.setText("ELIGE UNA AREA");
-        bg.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 170, -1));
+        javax.swing.GroupLayout aguapanelLayout = new javax.swing.GroupLayout(aguapanel);
+        aguapanel.setLayout(aguapanelLayout);
+        aguapanelLayout.setHorizontalGroup(
+            aguapanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+        aguapanelLayout.setVerticalGroup(
+            aguapanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
 
-        jLabel13.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel13.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel13.setText("TINACO(S)");
-        bg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 80, -1));
-
-        jLabel14.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel14.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("SISTERNA(S)");
-        bg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 80, -1));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_oil_tanker_40px.png"))); // NOI18N
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 40, 40));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_water_tower_40px.png"))); // NOI18N
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 40, 40));
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_automotive_generator_64px.png"))); // NOI18N
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 90, 80));
-
-        jLabel18.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel18.setText("GENERAL");
-        bg.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, 80, -1));
-
-        jLabel19.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel19.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel19.setText("MOSTRAR UNA VISTA GENERAL");
-        bg.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 210, -1));
+        bg.add(aguapanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 470, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -288,24 +260,6 @@ public class nivelesagua extends javax.swing.JFrame {
         Home a= new Home();
         a.setVisible(true);
     }//GEN-LAST:event_jLabel16MouseClicked
-
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        this.setVisible(false);
-        sisternas a= new sisternas();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        this.setVisible(false);
-        tinacos a= new tinacos();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        this.setVisible(false);
-        niveldeaguageneral a= new niveldeaguageneral();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel20MouseClicked
 
     /**
      * @param args the command line arguments
@@ -343,18 +297,11 @@ public class nivelesagua extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel aguapanel;
     private javax.swing.JPanel bg;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

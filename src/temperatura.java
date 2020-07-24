@@ -1,3 +1,10 @@
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.ThermometerPlot;
+import org.jfree.data.general.DefaultValueDataset;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +16,15 @@
  * @author angel
  */
 public class temperatura extends javax.swing.JFrame {
-
+    public DefaultValueDataset DATASET;
+    private ThermometerPlot plot;
+    private JFreeChart chart;
     /**
      * Creates new form temperatura
      */
     public temperatura() {
         initComponents();
+        
     }
 
     /**
@@ -47,9 +57,6 @@ public class temperatura extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -219,19 +226,19 @@ public class temperatura extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(102, 102, 102));
         jLabel13.setText("SALA");
-        bg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 240, 50, -1));
+        bg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 290, 50, -1));
 
         jLabel14.setBackground(new java.awt.Color(153, 153, 153));
         jLabel14.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
         jLabel14.setText("COCINA");
-        bg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 60, -1));
+        bg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 60, -1));
 
         jLabel15.setBackground(new java.awt.Color(153, 153, 153));
         jLabel15.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 102, 102));
         jLabel15.setText("RECAMARAS");
-        bg.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 240, 80, -1));
+        bg.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 80, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_single_bed_40px.png"))); // NOI18N
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -239,7 +246,7 @@ public class temperatura extends javax.swing.JFrame {
                 jLabel8MouseClicked(evt);
             }
         });
-        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 50, 60));
+        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 50, 60));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_chef_hat_40px.png"))); // NOI18N
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -247,7 +254,7 @@ public class temperatura extends javax.swing.JFrame {
                 jLabel11MouseClicked(evt);
             }
         });
-        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 40, 40));
+        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 40, 40));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_interior_40px.png"))); // NOI18N
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,27 +262,7 @@ public class temperatura extends javax.swing.JFrame {
                 jLabel12MouseClicked(evt);
             }
         });
-        bg.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 40, 40));
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_automotive_generator_64px.png"))); // NOI18N
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 90, 80));
-
-        jLabel18.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel18.setText("GENERAL");
-        bg.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, 80, -1));
-
-        jLabel19.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel19.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel19.setText("MOSTRAR UNA VISTA GENERAL");
-        bg.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 210, -1));
+        bg.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 40, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -305,9 +292,13 @@ public class temperatura extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        this.setVisible(false);
-       cocina a= new cocina();
+       
+    this.setVisible(false);
+   cocina a= new cocina();
        a.setVisible(true);
+    
+    
+        
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -321,12 +312,6 @@ public class temperatura extends javax.swing.JFrame {
        sala a= new sala();
        a.setVisible(true);
     }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        this.setVisible(false);
-       general a= new general();
-       a.setVisible(true);
-    }//GEN-LAST:event_jLabel20MouseClicked
 
     /**
      * @param args the command line arguments
@@ -374,10 +359,7 @@ public class temperatura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

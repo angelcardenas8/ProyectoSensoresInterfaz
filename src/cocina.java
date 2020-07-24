@@ -1,3 +1,24 @@
+
+import java.awt.Color;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.event.PlotChangeListener;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieToolTipGenerator;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.RingPlot;
+import org.jfree.chart.plot.ThermometerPlot;
+import org.jfree.chart.plot.dial.ArcDialFrame;
+import org.jfree.chart.plot.dial.DialPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultValueDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleInsets;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +30,57 @@
  * @author angel
  */
 public class cocina extends javax.swing.JFrame {
-
+ public DefaultValueDataset DATASET;
+    private final ThermometerPlot plot;
+    private final JFreeChart chart;
+    /**
     /**
      * Creates new form cocina
      */
     public cocina() {
-        initComponents();
+       initComponents();
+
+        /*for(int i=0;i<100;i++){
+          DATASET = new DefaultValueDataset(i);
+          Thread.sleep(100);
+        }*/
+       
+        DATASET = new DefaultValueDataset(90);
+
+        plot = new ThermometerPlot(DATASET);
+        chart = new JFreeChart("Termometro", plot);
+        ChartUtilities.applyCurrentTheme(chart);
+        ChartPanel cPanel = new ChartPanel(chart);
+        grafica.setLayout(new java.awt.BorderLayout());
+        grafica.add(cPanel);
+
+       /* XYSeries oSeries=new XYSeries("Temperatura");
+        oSeries.add(1, 2);
+        oSeries.add(2, 2);
+        oSeries.add(3, 2);
+        oSeries.add(4, 5);
+        oSeries.add(5, 6);
+        oSeries.add(6, 8);
+        oSeries.add(7, 10);
+        oSeries.add(8, 7);
+        oSeries.add(9, 4);
+        oSeries.add(10, 3);
+        oSeries.add(11, 7);
+        oSeries.add(12, 9);
+        oSeries.add(13, 12);
+        oSeries.add(14, 16);
+        oSeries.add(15, 13);
+        oSeries.add(16, 20);
+        
+        XYSeriesCollection oDataSet = new XYSeriesCollection();
+        oDataSet.addSeries(oSeries);
+        
+        JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+
+        //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+        ChartPanel cPanel = new ChartPanel(oChart);
+        grafica.setLayout(new java.awt.BorderLayout());
+        grafica.add(cPanel);*/
     }
 
     /**
@@ -39,9 +105,7 @@ public class cocina extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        grafica = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -195,44 +259,20 @@ public class cocina extends javax.swing.JFrame {
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
-        jLabel18.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel18.setText("TEMPERATURAS REGISTRADAS");
-        bg.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 240, -1));
+        grafica.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "FECHA", "HORA", "TEMPERATURA"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+        javax.swing.GroupLayout graficaLayout = new javax.swing.GroupLayout(grafica);
+        grafica.setLayout(graficaLayout);
+        graficaLayout.setHorizontalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+        graficaLayout.setVerticalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 460, 260));
+        bg.add(grafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 470, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -298,9 +338,9 @@ public class cocina extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JPanel grafica;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -310,8 +350,6 @@ public class cocina extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel menu;
     // End of variables declaration//GEN-END:variables
 }
