@@ -1,5 +1,8 @@
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaapplication1.curl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
@@ -18,6 +21,7 @@ import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+import org.json.simple.JSONObject;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,16 +41,33 @@ public class cocina extends javax.swing.JFrame {
     /**
      * Creates new form cocina
      */
-    public cocina() {
+    public cocina() throws InterruptedException {
        initComponents();
 
         /*for(int i=0;i<100;i++){
           DATASET = new DefaultValueDataset(i);
           Thread.sleep(100);
         }*/
-       
-        DATASET = new DefaultValueDataset(90);
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/fugasdegas";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
 
+        String zona = obj.get("zona").toString();
+  
+        //hacer una condicion para que solo me retorne las temperaturas de la cocina
+            String temperatura = obj.get("temperatura").toString();
+            String fechayhora = obj.get("fechayhora").toString();
+            System.out.println("Este ahora ya vale: "+temperatura);
+            DATASET = new DefaultValueDataset(Integer.parseInt(temperatura));
+            f.setText(fechayhora);
+        
+        
+                
+        
+        
+        
+       
+        //timers 
         plot = new ThermometerPlot(DATASET);
         chart = new JFreeChart("Termometro", plot);
         ChartUtilities.applyCurrentTheme(chart);
@@ -106,6 +127,7 @@ public class cocina extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         grafica = new javax.swing.JPanel();
+        f = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -265,14 +287,20 @@ public class cocina extends javax.swing.JFrame {
         grafica.setLayout(graficaLayout);
         graficaLayout.setHorizontalGroup(
             graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graficaLayout.createSequentialGroup()
+                .addContainerGap(301, Short.MAX_VALUE)
+                .addComponent(f, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         graficaLayout.setVerticalGroup(
             graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
+            .addGroup(graficaLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(f, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
-        bg.add(grafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 470, 310));
+        bg.add(grafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 460, 300));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -331,13 +359,18 @@ public class cocina extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cocina().setVisible(true);
+                try {
+                    new cocina().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(cocina.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JLabel f;
     private javax.swing.JPanel grafica;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;

@@ -1,9 +1,12 @@
 
+import javaapplication1.curl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultValueDataset;
+import org.json.simple.JSONObject;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,9 +26,24 @@ public class nivelesagua extends javax.swing.JFrame {
     public nivelesagua() {
         initComponents();
          DefaultCategoryDataset oDataSet = new DefaultCategoryDataset();
-        oDataSet.addValue(30, "Tinaco Baño arriba", "");
-        oDataSet.addValue(88, "Sisterna del patio", "");
+        //hacer una condicion para que retorne el porcentaje de cada tipo de contenedor
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/nivelesdeagua";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
 
+        String contenedor = obj.get("tipocontenedor").toString();
+        String porcentaje = obj.get("porcentaje").toString();
+       
+        
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 1", "");
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 2", "");
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 2", "");
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna Casa", "");
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna vieja", "");
+           oDataSet.addValue(Integer.parseInt(porcentaje), "Tanque", "");
+        
+        
+            
         
         //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
         JFreeChart oChart = ChartFactory.createBarChart3D("Almacenaje de agua", "Tipo de contenedor", "Nivel de agua", oDataSet, PlotOrientation.VERTICAL, true, true, true);
