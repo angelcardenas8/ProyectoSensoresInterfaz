@@ -1,3 +1,15 @@
+
+import javaapplication1.curl;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.DefaultValueDataset;
+import org.jfree.data.xy.XYDataItem;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.json.simple.JSONObject;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +27,44 @@ public class consumoenergetico extends javax.swing.JFrame {
      */
     public consumoenergetico() {
         initComponents();
+        
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/consumoenergetico";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
+
+  
+        //hacer una condicion para que solo me retorne las temperaturas de la cocina
+            String consumo = obj.get("consumo").toString();
+            String fechayhora = obj.get("fechayhora").toString();
+            int consumogeneral= Integer.parseInt(consumo);
+        
+        XYSeries oSeries=new XYSeries("Consumo energetico");
+        oSeries.add(1, consumogeneral);
+        oSeries.add(2, consumogeneral);
+        oSeries.add(3, consumogeneral);
+        oSeries.add(4, consumogeneral);
+        oSeries.add(5, consumogeneral);
+        oSeries.add(6, consumogeneral);
+        oSeries.add(7, consumogeneral);
+        oSeries.add(8, consumogeneral);
+        oSeries.add(9, consumogeneral);
+        oSeries.add(10, consumogeneral);
+        oSeries.add(11, consumogeneral);
+        oSeries.add(12, consumogeneral);
+        oSeries.add(13, consumogeneral);
+        oSeries.add(14, consumogeneral);
+        oSeries.add(15, consumogeneral);
+        oSeries.add(16, consumogeneral);
+        
+        XYSeriesCollection oDataSet = new XYSeriesCollection();
+        oDataSet.addSeries(oSeries);
+        
+        JFreeChart oChart = ChartFactory.createXYLineChart("Consumos", fechayhora, "Consumo", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+
+        //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+        ChartPanel cPanel = new ChartPanel(oChart);
+        grafica.setLayout(new java.awt.BorderLayout());
+        grafica.add(cPanel);
     }
 
     /**
@@ -39,17 +89,8 @@ public class consumoenergetico extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        grafica = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,7 +219,12 @@ public class consumoenergetico extends javax.swing.JFrame {
             }
         });
 
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_light_off_40px.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,95 +233,43 @@ public class consumoenergetico extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83))
+                .addGap(98, 98, 98)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
-        jLabel10.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel10.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel10.setText("ELIGE UNA AREA");
-        bg.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 170, -1));
+        javax.swing.GroupLayout graficaLayout = new javax.swing.GroupLayout(grafica);
+        grafica.setLayout(graficaLayout);
+        graficaLayout.setHorizontalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+        graficaLayout.setVerticalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
 
-        jLabel13.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel13.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel13.setText("SALA");
-        bg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 240, 50, -1));
-
-        jLabel14.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel14.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("COCINA");
-        bg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 60, -1));
-
-        jLabel15.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel15.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("RECAMARAS");
-        bg.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 240, 80, -1));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_single_bed_40px.png"))); // NOI18N
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 50, 60));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_chef_hat_40px.png"))); // NOI18N
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 40, 40));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_interior_40px.png"))); // NOI18N
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 40, 40));
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_automotive_generator_64px.png"))); // NOI18N
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 90, 80));
-
-        jLabel18.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel18.setText("GENERAL");
-        bg.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, 80, -1));
-
-        jLabel21.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel21.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel21.setText("MOSTRAR UNA VISTA GENERAL");
-        bg.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 210, -1));
+        bg.add(grafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 470, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -304,29 +298,11 @@ public class consumoenergetico extends javax.swing.JFrame {
         a.setVisible(true);
     }//GEN-LAST:event_jLabel16MouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         this.setVisible(false);
-        recamasConsumoenergetico a= new recamasConsumoenergetico();
+        consumoenergetico a = new consumoenergetico();
         a.setVisible(true);
-    }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        this.setVisible(false);
-        cocinaConsumoenergetico a= new cocinaConsumoenergetico();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        this.setVisible(false);
-        salaConsumoenergetico a= new salaConsumoenergetico();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        this.setVisible(false);
-        generalConsumoEnergetico a= new generalConsumoEnergetico();
-        a.setVisible(true);
-    }//GEN-LAST:event_jLabel20MouseClicked
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -365,24 +341,15 @@ public class consumoenergetico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JPanel grafica;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

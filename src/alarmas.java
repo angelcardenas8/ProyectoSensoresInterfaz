@@ -1,3 +1,7 @@
+
+import javaapplication1.curl;
+import org.json.simple.JSONObject;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +19,92 @@ public class alarmas extends javax.swing.JFrame {
      */
     public alarmas() {
         initComponents();
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/alarmas";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
+chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+  
+        //hacer una condicion para que solo me retorne las temperaturas de la cocina
+            String problema = obj.get("problema").toString();
+             if ("fallo en la chimenea".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(true);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+                                                puertarecamara.setVisible(false);
+
+                alerta.setText(problema);
+            }
+             if ("ventana sala abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(true);
+                cochera.setVisible(false);
+                                                puertarecamara.setVisible(false);
+
+                alerta.setText(problema);
+            }
+             if ("ventana recamara 1 abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(true);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+                                puertarecamara.setVisible(false);
+
+                alerta.setText(problema);
+            }if ("ventana recamara 2 abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(true);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+                                puertarecamara.setVisible(false);
+
+                alerta.setText(problema);
+            }if ("Puerta principal abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(true);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+                                puertarecamara.setVisible(false);
+
+                alerta.setText(problema);
+            }if ("cochera abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(true);
+                alerta.setText(problema);
+                                puertarecamara.setVisible(false);
+
+            }
+            if ("Puerta recamara 2 abierta".equals(obj.get("problema").toString())) {
+                chimenea.setVisible(false);
+                recamara1.setVisible(false);
+                recamara2.setVisible(false);
+                puertap.setVisible(false);
+                ventanasala.setVisible(false);
+                cochera.setVisible(false);
+                puertarecamara.setVisible(true);
+                alerta.setText(problema);
+            }
+
     }
 
     /**
@@ -40,9 +130,16 @@ public class alarmas extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        alerta = new javax.swing.JLabel();
+        cochera = new javax.swing.JLabel();
+        recamara1 = new javax.swing.JLabel();
+        puertap = new javax.swing.JLabel();
+        recamara2 = new javax.swing.JLabel();
+        ventanasala = new javax.swing.JLabel();
+        chimenea = new javax.swing.JLabel();
+        puertarecamara = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,6 +270,13 @@ public class alarmas extends javax.swing.JFrame {
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_door_sensor_alarmed_40px.png"))); // NOI18N
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -184,7 +288,9 @@ public class alarmas extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125))
+                .addGap(75, 75, 75)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,46 +301,47 @@ public class alarmas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
-        jLabel18.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel18.setText("ESTADO DE ALARMAS");
-        bg.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 170, -1));
+        alerta.setBackground(new java.awt.Color(153, 153, 153));
+        alerta.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
+        alerta.setForeground(new java.awt.Color(102, 102, 102));
+        alerta.setText("PROBLEMA: PUERTA ABIERTA");
+        bg.add(alerta, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 220, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Hora", "Fecha", "Problema encontrado"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        cochera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(cochera, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, -1, -1));
 
-        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 177, 470, 250));
+        recamara1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(recamara1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, -1, -1));
+
+        puertap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(puertap, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
+
+        recamara2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(recamara2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+
+        ventanasala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(ventanasala, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, -1, -1));
+
+        chimenea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(chimenea, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, -1, -1));
+
+        puertarecamara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_high_priority_48px.png"))); // NOI18N
+        bg.add(puertarecamara, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, -1, -1));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/thesimpson_108050.png"))); // NOI18N
+        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 510, 300));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,6 +369,12 @@ public class alarmas extends javax.swing.JFrame {
         Home a= new Home();
         a.setVisible(true);
     }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        this.setVisible(false);
+       alarmas a = new alarmas();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -299,22 +412,29 @@ public class alarmas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alerta;
     private javax.swing.JPanel bg;
+    private javax.swing.JLabel chimenea;
+    private javax.swing.JLabel cochera;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel menu;
+    private javax.swing.JLabel puertap;
+    private javax.swing.JLabel puertarecamara;
+    private javax.swing.JLabel recamara1;
+    private javax.swing.JLabel recamara2;
+    private javax.swing.JLabel ventanasala;
     // End of variables declaration//GEN-END:variables
 }

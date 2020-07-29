@@ -33,20 +33,41 @@ public class nivelesagua extends javax.swing.JFrame {
 
         String contenedor = obj.get("tipocontenedor").toString();
         String porcentaje = obj.get("porcentaje").toString();
+        String fechayhora = obj.get("fechayhora").toString();
        
-        
-           oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 1", "");
-           oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 2", "");
+            if ("Tinaco 3".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 3", "");
+            }
+            if ("Tinaco1".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 1", "");
+            }
+            if ("Tinaco2".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 2", "");
+            }
+            if ("Sisterna casa".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna Casa", "");
+            }
+            if ("Sisterna vieja".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna vieja", "");
+            }
+            if ("Tanque".equals(obj.get("tipocontenedor").toString())) {
+               oDataSet.addValue(Integer.parseInt(porcentaje), "Tanque", "");
+            }
+            
+            
+                     
+
+         /*  oDataSet.addValue(17, "Tinaco 2", "");
            oDataSet.addValue(Integer.parseInt(porcentaje), "Tinaco 2", "");
            oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna Casa", "");
            oDataSet.addValue(Integer.parseInt(porcentaje), "Sisterna vieja", "");
            oDataSet.addValue(Integer.parseInt(porcentaje), "Tanque", "");
-        
+        */
         
             
         
         //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
-        JFreeChart oChart = ChartFactory.createBarChart3D("Almacenaje de agua", "Tipo de contenedor", "Nivel de agua", oDataSet, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart oChart = ChartFactory.createBarChart3D("Almacenaje de agua", fechayhora, "Nivel de agua", oDataSet, PlotOrientation.VERTICAL, true, true, true);
 
         //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
         ChartPanel cPanel = new ChartPanel(oChart);
@@ -78,6 +99,7 @@ public class nivelesagua extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         aguapanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -209,6 +231,13 @@ public class nivelesagua extends javax.swing.JFrame {
 
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_dew_point_40px.png"))); // NOI18N
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -220,7 +249,9 @@ public class nivelesagua extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,7 +264,9 @@ public class nivelesagua extends javax.swing.JFrame {
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -278,6 +311,12 @@ public class nivelesagua extends javax.swing.JFrame {
         Home a= new Home();
         a.setVisible(true);
     }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        this.setVisible(false);
+        nivelesagua a = new nivelesagua();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -325,6 +364,7 @@ public class nivelesagua extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

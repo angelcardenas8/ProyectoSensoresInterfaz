@@ -1,3 +1,7 @@
+
+import javaapplication1.curl;
+import org.json.simple.JSONObject;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +19,86 @@ public class fugasdegas extends javax.swing.JFrame {
      */
     public fugasdegas() {
         initComponents();
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/sensores";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
+                baño.setVisible(false);
+                cocina.setVisible(false);
+                sala.setVisible(false);
+                dormitorio.setVisible(false);
+                                                patio.setVisible(false);
+
+                dormitorio2.setVisible(false);
+  
+            String zona = obj.get("area").toString();
+            
+            if ("sala".equals(obj.get("area").toString())) {
+                baño.setVisible(false);
+                cocina.setVisible(false);
+                sala.setVisible(true);
+                dormitorio.setVisible(false);
+                dormitorio2.setVisible(false);
+                                                patio.setVisible(false);
+
+                alerta.setText(zona+" se detecta un gas en el aire");
+            }
+             if ("cocina".equals(obj.get("area").toString())) {
+                baño.setVisible(false);
+                cocina.setVisible(true);
+                sala.setVisible(false);
+                dormitorio.setVisible(false);
+                dormitorio2.setVisible(false);
+                                                patio.setVisible(false);
+
+                alerta.setText(zona+" se detecta un gas en el aire");
+
+            }
+              if ("baño".equals(obj.get("area").toString())) {
+                baño.setVisible(true);
+                cocina.setVisible(false);
+                sala.setVisible(false);
+                dormitorio.setVisible(false);
+                dormitorio2.setVisible(false);
+                                                patio.setVisible(false);
+
+                alerta.setText(zona+" se detecta un gas en el aire");
+
+            }
+               if ("recamara1".equals(obj.get("area").toString())) {
+                baño.setVisible(false);
+                cocina.setVisible(false);
+                sala.setVisible(false);
+                dormitorio.setVisible(true);
+                dormitorio2.setVisible(false);
+                                                patio.setVisible(false);
+
+                alerta.setText(zona+" se detecta un gas en el aire");
+
+            }
+                if ("recamara2".equals(obj.get("area").toString())) {
+                baño.setVisible(false);
+                cocina.setVisible(false);
+                sala.setVisible(false);
+                dormitorio.setVisible(false);
+                dormitorio2.setVisible(true);
+                                patio.setVisible(false);
+
+                alerta.setText(zona+" se detecta un gas en el aire");
+
+            }
+                if ("patio".equals(obj.get("area").toString())) {
+                baño.setVisible(false);
+                cocina.setVisible(false);
+                sala.setVisible(false);
+                dormitorio.setVisible(false);
+                dormitorio2.setVisible(false);
+                patio.setVisible(true);
+                alerta.setText(zona+" se detecta un gas en el aire");
+            }
+               
+           
+            
+            
     }
 
     /**
@@ -39,9 +123,18 @@ public class fugasdegas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        baño = new javax.swing.JLabel();
+        cocina = new javax.swing.JLabel();
+        sala = new javax.swing.JLabel();
+        dormitorio = new javax.swing.JLabel();
+        dormitorio2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        alerta = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        sala1 = new javax.swing.JLabel();
+        patio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,6 +263,13 @@ public class fugasdegas extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -179,34 +279,75 @@ public class fugasdegas extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addGap(127, 127, 127)
                 .addComponent(jLabel9)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
+        baño.setBackground(new java.awt.Color(255, 255, 255));
+        baño.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        baño.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(baño, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, -1, -1));
+
+        cocina.setBackground(new java.awt.Color(255, 255, 255));
+        cocina.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        cocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(cocina, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, -1, -1));
+
+        sala.setBackground(new java.awt.Color(255, 255, 255));
+        sala.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        sala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(sala, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, -1, -1));
+
+        dormitorio.setBackground(new java.awt.Color(255, 255, 255));
+        dormitorio.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        dormitorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(dormitorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, -1, -1));
+
+        dormitorio2.setBackground(new java.awt.Color(255, 255, 255));
+        dormitorio2.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        dormitorio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(dormitorio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, -1, -1));
+
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rsz_plano-de-casa-terreno-pequeño.jpg"))); // NOI18N
-        bg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+        bg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, -1, -1));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/f245b4f5455db884b78c0db45d09a1744cca0d3ar1-800-600_00.gif"))); // NOI18N
-        jLabel8.setText("jLabel8");
-        jLabel8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 220, 170));
+        alerta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bg.add(alerta, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 310, 20));
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
-        jLabel11.setText("TODO BIEN AQUI");
-        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
+        jLabel11.setText("Cuidado que en:");
+        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, -1));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        sala1.setBackground(new java.awt.Color(255, 255, 255));
+        sala1.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        sala1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(sala1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, -1, -1));
+
+        patio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_fire_48px_1.png"))); // NOI18N
+        bg.add(patio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 50, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,6 +375,18 @@ public class fugasdegas extends javax.swing.JFrame {
         Home a= new Home();
         a.setVisible(true);
     }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        this.setVisible(false);
+        temperatura a = new temperatura();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        this.setVisible(false);
+        fugasdegas a = new fugasdegas();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
      * @param args the command line arguments
@@ -271,8 +424,14 @@ public class fugasdegas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alerta;
+    private javax.swing.JLabel baño;
     private javax.swing.JPanel bg;
+    private javax.swing.JLabel cocina;
+    private javax.swing.JLabel dormitorio;
+    private javax.swing.JLabel dormitorio2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -287,5 +446,8 @@ public class fugasdegas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel menu;
+    private javax.swing.JLabel patio;
+    private javax.swing.JLabel sala;
+    private javax.swing.JLabel sala1;
     // End of variables declaration//GEN-END:variables
 }

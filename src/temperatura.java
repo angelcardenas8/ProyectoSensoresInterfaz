@@ -1,9 +1,11 @@
 
+import javaapplication1.curl;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.data.general.DefaultValueDataset;
+import org.json.simple.JSONObject;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +26,64 @@ public class temperatura extends javax.swing.JFrame {
      */
     public temperatura() {
         initComponents();
+         /*for(int i=0;i<100;i++){
+          DATASET = new DefaultValueDataset(i);
+          Thread.sleep(100);
+        }*/
+        String solicitud_url = "http://192.168.1.67/ProyectoSensores/public/api/fugasdegas";
+        curl api = new curl(solicitud_url, "GET");
+        JSONObject obj = api.apicall(null); 
+
+        String zona = obj.get("zona").toString();
+  
+        //hacer una condicion para que solo me retorne las temperaturas de la cocina
+            String temperatura = obj.get("temperatura").toString();
+            String fechayhora = obj.get("fechayhora").toString();
+            System.out.println("Este ahora ya vale: "+temperatura);
+            DATASET = new DefaultValueDataset(Integer.parseInt(temperatura));
+            f.setText(fechayhora);
+        
+        
+                
+        
+        
+        
+       
+        //timers 
+        plot = new ThermometerPlot(DATASET);
+        chart = new JFreeChart(zona, plot);
+        ChartUtilities.applyCurrentTheme(chart);
+        ChartPanel cPanel = new ChartPanel(chart);
+        grafica.setLayout(new java.awt.BorderLayout());
+        grafica.add(cPanel);
+
+       /* XYSeries oSeries=new XYSeries("Temperatura");
+        oSeries.add(1, 2);
+        oSeries.add(2, 2);
+        oSeries.add(3, 2);
+        oSeries.add(4, 5);
+        oSeries.add(5, 6);
+        oSeries.add(6, 8);
+        oSeries.add(7, 10);
+        oSeries.add(8, 7);
+        oSeries.add(9, 4);
+        oSeries.add(10, 3);
+        oSeries.add(11, 7);
+        oSeries.add(12, 9);
+        oSeries.add(13, 12);
+        oSeries.add(14, 16);
+        oSeries.add(15, 13);
+        oSeries.add(16, 20);
+        
+        XYSeriesCollection oDataSet = new XYSeriesCollection();
+        oDataSet.addSeries(oSeries);
+        
+        JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+
+        //JFreeChart oChart = ChartFactory.createXYLineChart("Temperaturas", "Hora", "Temperatura", oDataSet,PlotOrientation.VERTICAL,true,false,false);
+        ChartPanel cPanel = new ChartPanel(oChart);
+        grafica.setLayout(new java.awt.BorderLayout());
+        grafica.add(cPanel);*/
         
     }
 
@@ -37,6 +97,7 @@ public class temperatura extends javax.swing.JFrame {
     private void initComponents() {
 
         bg = new javax.swing.JPanel();
+        bg1 = new javax.swing.JPanel();
         menu = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -48,20 +109,18 @@ public class temperatura extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        grafica = new javax.swing.JPanel();
+        f = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bg1.setBackground(new java.awt.Color(255, 255, 255));
+        bg1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         menu.setBackground(new java.awt.Color(102, 0, 102));
 
@@ -168,7 +227,7 @@ public class temperatura extends javax.swing.JFrame {
                 .addContainerGap(250, Short.MAX_VALUE))
         );
 
-        bg.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 450));
+        bg1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 450));
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -176,14 +235,19 @@ public class temperatura extends javax.swing.JFrame {
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("TEMPERATURA");
-
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_temperature_40px.png"))); // NOI18N
+        jLabel9.setText("TEMPERATURA GENERAL");
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_double_left_32px.png"))); // NOI18N
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel16MouseClicked(evt);
+            }
+        });
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_refresh_shield_40px.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
             }
         });
 
@@ -194,75 +258,53 @@ public class temperatura extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
-                .addGap(132, 132, 132))
+                .addGap(83, 83, 83)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
-        bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
+        bg1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 490, 80));
 
-        jLabel10.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel10.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel10.setText("ELIGE UNA AREA");
-        bg.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 170, -1));
+        grafica.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel13.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel13.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel13.setText("SALA");
-        bg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 290, 50, -1));
+        javax.swing.GroupLayout graficaLayout = new javax.swing.GroupLayout(grafica);
+        grafica.setLayout(graficaLayout);
+        graficaLayout.setHorizontalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graficaLayout.createSequentialGroup()
+                .addContainerGap(301, Short.MAX_VALUE)
+                .addComponent(f, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+        graficaLayout.setVerticalGroup(
+            graficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(graficaLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(f, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(245, Short.MAX_VALUE))
+        );
 
-        jLabel14.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel14.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("COCINA");
-        bg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 60, -1));
+        bg1.add(grafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 460, 300));
 
-        jLabel15.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel15.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("RECAMARAS");
-        bg.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 80, -1));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_single_bed_40px.png"))); // NOI18N
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 50, 60));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_chef_hat_40px.png"))); // NOI18N
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 40, 40));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_interior_40px.png"))); // NOI18N
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        bg.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 40, 40));
+        bg.add(bg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,39 +321,23 @@ public class temperatura extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
-       this.setVisible(false);
-       Home a= new Home();
-       a.setVisible(true);
-    }//GEN-LAST:event_jLabel16MouseClicked
-
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         this.setVisible(false);
-       Home a= new Home();
-       a.setVisible(true); 
+        Home a= new Home();
+        a.setVisible(true);
     }//GEN-LAST:event_jPanel2MouseClicked
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-       
-    this.setVisible(false);
-   cocina a= new cocina();
-       a.setVisible(true);
-    
-    
-        
-    }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-       this.setVisible(false);
-       recamaras a= new recamaras();
-       a.setVisible(true);
-    }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         this.setVisible(false);
-       sala a= new sala();
-       a.setVisible(true);
-    }//GEN-LAST:event_jLabel12MouseClicked
+        Home a= new Home();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        this.setVisible(false);
+        temperatura a = new temperatura();
+        a.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -350,21 +376,17 @@ public class temperatura extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JPanel bg1;
+    private javax.swing.JLabel f;
+    private javax.swing.JPanel grafica;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
